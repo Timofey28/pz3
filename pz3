@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string basicTask(int n, int basis)
+{
+    string ans;
+    while(n) {
+        int k = n % basis;
+        if(k < 10) ans = to_string(k) + ans;
+        else ans = string(1, 'A'+k-10) + ans;
+        n /= basis;
+    }
+    return ans;
+}
+
+string mainTask(int basis, string s_num, int to)
+{
+    int num = 0, digit = 0, temp;
+    for(int i = s_num.size()-1; ~i; --i) {
+        if(isdigit(s_num[i])) temp = atoi(string(1, s_num[i]).c_str());
+        else temp = toupper(s_num[i]) - 'A' + 10;
+        num += temp * pow(basis, digit++);
+    }
+    cout << num << "\n";
+    return basicTask(num, to);
+}
+
+int main()
+{
+    setlocale(0, "");
+
+    int n, basis, to;
+    cout << "Число/исходная сс: ";
+    cin >> n >> basis;
+    cout << basicTask(n, basis) << "\n\nИсходная сс/само число/в какую сс: ";
+
+    string s;
+    cin >> basis >> s >> to;
+    cout << mainTask(basis, s, to) << "\n";
+
+    return 0;
+}
